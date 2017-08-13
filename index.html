@@ -15,6 +15,8 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="css/rollercoasterguystyle.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
 </head>
 
 <body>
@@ -29,8 +31,8 @@
         </div>
 
         <div class="row text-center">
-            <div class="col-sm-4 col-sm-offset-2">
-                <div class="panel label-success transparent fixed-container" style="height: 250px">
+            <div class="col-sm-4">
+                <div class="panel label-success transparent fixed-container">
                     <h1><span id="current-moon" class="label label-success pulse">---</span></h1>
                     <h3><span id="change-value" class="label label-success pulse">--</span> <span id="change-percentage" class="label label-success">--</span></h3>
                     <div class="panel-body">
@@ -39,6 +41,28 @@
                 </div>
             </div>
             <div class="col-sm-4">
+                <div class="panel label-success transparent fixed-container">
+                    <h1><span id="tx-count" class="label label-success">---</span></h1>
+                    <div class="panel-body">
+                        <h3> Unconfirmed transactions </h3>
+                    </div>
+                    <h3><span id="allTimeHighPrice" class="label label-success">---</span></h3>
+                    <h3><span id="allTimeHighDate" class="label label-success">---</span></h3>
+                    <div class="panel-body">
+                        <h3>All-time high</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel label-success transparent fixed-container">
+                    <h3><span id="fastest-avg-fee" class="label label-success">---</span></h3>
+                    <h4> Cheapest and fastest per byte</h4>
+                    <h3><span id="fastest-avg-fee-fiat" class="label label-success">---</span></h3>
+                    <h4> per median tx size of 226 bytes</h4>
+                    <!-- <h5><a target="_blank" href="https://bitcoinfees.21.co/"> see details here</a> -->
+                </div>
+            </div>
+            <!-- <div class="col-sm-4">
                 <div class="panel transparent-no-hover fixed-container" style="height: 250px">
                     <div class="panel-body">
                         Markets
@@ -65,7 +89,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+          </div>
         </div>
         <div class="row text-center">
             <div class="col-sm-4 col-sm-offset-4">
@@ -98,35 +122,22 @@
                     <h5><a target="_blank" href="https://bitcoinfees.21.co/"> see details here</a>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="panel label-success transparent fixed-container">
-                    <h1><span id="tx-count" class="label label-success">---</span></h1>
-                    <div class="panel-body">
-                        <h3> Unconfirmed transactions </h3>
-                    </div>
-                    <h5><a target="_blank" href="https://blockchain.info/unconfirmed-transactions"> see details here</a>
-                        <h5>
-                </div>
-            </div>
-        </div>
-        <div class="row text-center">
+        </div> -->
+        <!-- <div class="row text-center">
             <div class="col-md-6 col-md-offset-3">
 
             </div>
         </div>
-        <div class="push"></div>
+        <div class="push"></div> -->
     </div>
 
-    <nav class="navbar navbar-inverse navbar-bottom" style="padding:20px 0 0 0; margin-bottom:0px; color:#FFF">
+  <!--  <nav class="navbar navbar-inverse navbar-bottom" style="padding:20px 0 0 0; margin-bottom:0px; color:#FFF">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
                     <h2 id='footer-header'> The Roller Coaster Guy </h2>
                     <div class="col-sm" style="padding: 0 0 0 0px">
                         <img src="images/bitcoin_logo.png" style="width: 150px">
-                    </div>
-                    <div class="col-sm" style="padding: 0 0 0 0px">
-                        <iframe data-aa='411227' src='//ad.a-ads.com/411227?size=120x60' scrolling='no' style='width:120px; height:60px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe>
                     </div>
                     <div class="col-sm" style="padding: 0 0 0 0px">
                         <h2 id='footer-header'> Acknowledgments </h2>
@@ -190,29 +201,14 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3dy5gmtp8yhk7.cloudfront.net/2.1/pusher.min.js" type="text/javascript"></script>
     <script src="js/markets.js"></script>
     <script src="js/roller-coaster-engine.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-91625506-1', 'auto');
-        ga('send', 'pageview');
-    </script>
 </body>
 
 </html>

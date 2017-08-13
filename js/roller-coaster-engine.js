@@ -1,12 +1,13 @@
 $(document).ready(function() {
 
-    var tronaldDump = ["PANIC SELLING!!!", "DUMPPP!", "SWSF'S FAULT", "BIGGER BLOCKS CENTRALIZATION", "Cheina. China. Jina. Shyna", "buy da dip", "Bitcoin up to 10% off", "Tronald DUMP!", "China ban. Ban china"];
-    var hodlersBelike = ["hooodl", "hodloor", "To da mooooon", "$10K INCOMING!!!", "BITCOIN WILL UNITE US!", "PUMP", "buckle up hodlers", "can't see any altcoin up here", "hey r/bitcoin, should I buy today?"];
-    var meh = ["meh..", "mmm...", "meh", "mmm..", "no ban no fun", "meh", "no ban no fun", "mmm", "no etf, no pump"];
+    var tronaldDump = ["PANIC SELLING!!!", "DUMPPP!", "SWSF'S FAULT", "BIGGER BLOCKS CENTRALIZATION", "Cheina. China. Jina. Shyna", "buy da dip", "Bitcoin up to 10% off", "Tronald DUMP!", "China ban. Ban china", "Price down - Pick up!"];
+    var hodlersBelike = ["hooodl", "hodloor", "To da mooooon", "$10K INCOMING!!!", "BITCOIN WILL UNITE US!", "PUMP", "buckle up hodlers", "can't see any altcoin up here", "hey r/bitcoin, should I buy today?", "Look! Got myself a new Lambo."];
+    var meh = ["meh..", "mmm...", "meh", "mmm..", "no ban no fun", "meh", "no ban no fun", "mmm", "no etf, no pump", "1 Doge = 1 Doge", "C'mon.. do something!"];
     var maximum = hodlersBelike.length;
     var currentMoon = null;
     var oldEarth = null;
     var toggleHoldingsInput = true;
+    var allTimeHigh = {price: 0, date: 1};
 
     var markets = [new Bitstamp(), new Bitfinex()];
     var selectedMarketIndex = 0;
@@ -36,6 +37,7 @@ $(document).ready(function() {
     function mooningFunction(open, close, id) {
         updateCurrentMoon(open, close);
         updateStatus(open, close);
+        updateAllTimeHigh(close);
         updateLabels(open, close);
         updateTicker(open, close, id);
         updateHodlings(close);
@@ -119,6 +121,8 @@ $(document).ready(function() {
 
         $('#roller-coaster-status').html(rollerCoasterStatus);
 
+        // TODO: calls to raspberry hardware go here and take angle as input. values are [-90:+90].
+
     }
 
     function rotateTheGuy(angle) {
@@ -140,6 +144,65 @@ $(document).ready(function() {
         }
     }
 
+    function updateAllTimeHigh(currentPrice, highPrice) {
+      if (allTimeHigh.price === 0) {getInitialAllTimeHigh()};
+      if (currentPrice > allTimeHigh.price) {
+        allTimeHigh.price = currentPrice;
+        allTimeHigh.date = new Date;
+        $('#allTimeHighPrice').html('$' + allTimeHigh.price + ' USD');
+        $('#allTimeHighDate').html(moment(allTimeHigh.date).calendar());
+        // $('document').ready(
+          scream(allTimeHigh);
+        // );
+      }
+    }
+
+    function getInitialAllTimeHigh() {
+      $.ajax({
+          dataType: "json",
+          crossDomain: true,
+          url: "https://blockchain.info/charts/market-price?timespan=360days&format=json&cors=true",
+          success: findAllTimeHigh
+      });
+    }
+
+    function findAllTimeHigh(data) {
+      //check if it was today https://www.bitstamp.net/api/ticker
+      $.ajax({
+          dataType: "json",
+          crossDomain: true,
+          url: "https://www.bitstamp.net/api/ticker",
+          success: function(todayHigh) {
+            data.values.forEach(function(pair) {
+            if (pair.y > allTimeHigh.price) {
+              allTimeHigh.price = pair.y;
+              allTimeHigh.date = pair.x;
+              $('#allTimeHighPrice').html('$' + allTimeHigh.price + ' USD');
+              $('#allTimeHighDate').html(moment(allTimeHigh.date).calendar());
+            }
+            if (todayHigh.high > allTimeHigh.price) {
+              allTimeHigh.price = todayHigh.high;
+              allTimeHigh.date = 'within last 24h';
+              $('#allTimeHighPrice').html('$' + allTimeHigh.price + ' USD');
+              $('#allTimeHighDate').html(allTimeHigh.date);
+            }
+          });
+        }
+      });
+    }
+
+    function scream(allTimeHigh) {
+      $('.container').hide();
+      $('body').append(allTimeHighMarkup);
+      // for(i ; i < 10; i++) {
+        setTimeout(function() {
+          $('.container').show();
+          $('.allTimeHigh').remove();
+          }
+      , 5000);
+    }
+
+    var allTimeHighMarkup = '<div class="allTimeHigh" style="opacity: 0.9;"><div><h1 class="allTimeHightext flash">ALL TIME HIGH!!!</h1></div></div>'
 
     function getRandom(max) {
         return Math.round(Math.random() * max);
@@ -151,6 +214,7 @@ $(document).ready(function() {
     function txCountRequest() {
         $.ajax({
             dataType: "json",
+            crossDomain: true,
             url: "https://blockchain.info/q/unconfirmedcount?cors=true",
             success: mempoolAttack
         });
@@ -169,6 +233,7 @@ $(document).ready(function() {
     function feeRequest() {
         $.ajax({
             dataType: "json",
+            crossDomain: true,
             url: "https://bitcoinfees.21.co/api/v1/fees/recommended",
             success: makeFeeGreatAgain
         });

@@ -44,8 +44,8 @@ body {
 }
 
 .fixed-container {
-    min-height: 220px;
-    max-height: 350px;
+    min-height: 250px;
+    max-height: 400px;
 }
 
 .pulse {
@@ -63,6 +63,22 @@ body {
     50% {
         opacity: 0;
     }
+}
+
+.label {
+  margin: 3px;
+}
+
+.allTimeHightext {
+
+  opacity: 1;
+  color: white;
+  font-size: 10vw;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transform: translateX(15%);
 }
 
 .flash {

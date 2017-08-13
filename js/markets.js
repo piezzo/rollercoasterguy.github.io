@@ -36,6 +36,14 @@ class Market {
         return this.openPrice;
     }
 
+    getHighPrice() {
+        return this.highPrice;
+    }
+
+    setHighPrice() {
+        return this.highPrice;
+    }
+
     setOpenPrice(v) {
         this.openPrice = v;
     }
@@ -72,7 +80,8 @@ class Bitstamp extends Market {
             success: function(data) {
                 _this.setOpenPrice(data["open"]);
                 _this.setLatestPrice(data["last"]);
-                fctn(_this.getOpenPrice(), _this.getLatestPrice(), _this.getId());
+                _this.setHighPrice(data["high"]);
+                fctn(_this.getOpenPrice(), _this.getLatestPrice(), _this.getId(), _this.getHighPrice());
             }
         });
     }
@@ -98,7 +107,7 @@ class Bitfinex extends Market {
                 var latestPrice = msgData[1][6];
                 if (latestPrice != undefined) {
                     _this.setLatestPrice(latestPrice);
-                    updateTicker(_this.getOpenPrice(), latestPrice, _this.getId());
+                    updateTicker(_this.getOpenPrice(), latestPrice, _this.getId(), _this.getHighPrice());
                 }
             }
         };
@@ -123,6 +132,7 @@ class Bitfinex extends Market {
             success: function(data) {
                 _this.setOpenPrice(data[0][1]);
                 _this.setLatestPrice(data[0][2]);
+                _this.setHighPrice(data[0][3]);
                 fctn(_this.getOpenPrice(), _this.getLatestPrice(), _this.id);
             }
         });
