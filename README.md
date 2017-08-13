@@ -9,3 +9,7 @@ Open up a browser on your smart tv and point it to [https://isnogood.de/rcg/](ht
 # issues
 
 The all-time-high section is inaccurate. If you know a (free) API which serves all-time-highs with accurate dates, please tell me or make a PR.
+
+# license
+
+This project is released under the terms of the MIT license. See [LICENSE](LICENSE) for more information.
