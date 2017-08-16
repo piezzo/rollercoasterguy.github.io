@@ -93,7 +93,7 @@ $(document).ready(function() {
         // it must have pulse class
         mooningElem.addClass("flash");
         setTimeout(function() {
-            mooningElem.removeClass("flash")
+            mooningElem.removeClass("flash");
         }, 1000);
     }
 
@@ -145,15 +145,13 @@ $(document).ready(function() {
     }
 
     function updateAllTimeHigh(currentPrice, highPrice) {
-      if (allTimeHigh.price === 0) {getInitialAllTimeHigh()};
-      if (currentPrice > allTimeHigh.price) {
+      if (allTimeHigh.price === 0) {getInitialAllTimeHigh();}
+      if (currentPrice > allTimeHigh.price && allTimeHigh.price !== 0 ) {
         allTimeHigh.price = currentPrice;
-        allTimeHigh.date = new Date;
+        allTimeHigh.date = new Date();
         $('#allTimeHighPrice').html('$' + allTimeHigh.price + ' USD');
         $('#allTimeHighDate').html(moment(allTimeHigh.date).calendar());
-        // $('document').ready(
           scream(allTimeHigh);
-        // );
       }
     }
 
@@ -178,7 +176,14 @@ $(document).ready(function() {
               allTimeHigh.price = pair.y;
               allTimeHigh.date = pair.x;
               $('#allTimeHighPrice').html('$' + allTimeHigh.price + ' USD');
-              $('#allTimeHighDate').html(moment(allTimeHigh.date).calendar());
+              $('#allTimeHighDate').html(moment.unix(allTimeHigh.date).calendar(null, {
+                  sameDay: '[Today]',
+                  nextDay: '[Tomorrow]',
+                  nextWeek: 'dddd',
+                  lastDay: '[Yesterday]',
+                  lastWeek: '[Last] dddd',
+                  sameElse: 'DD/MM/YYYY'
+              }));
             }
             if (todayHigh.high > allTimeHigh.price) {
               allTimeHigh.price = todayHigh.high;
@@ -192,17 +197,19 @@ $(document).ready(function() {
     }
 
     function scream(allTimeHigh) {
-      $('.container').hide();
-      $('body').append(allTimeHighMarkup);
-      // for(i ; i < 10; i++) {
-        setTimeout(function() {
-          $('.container').show();
-          $('.allTimeHigh').remove();
-          }
-      , 5000);
+      console.log(JSON.stringify(allTimeHigh));
+      if (allTimeHigh.price > 0) {
+        $('.container').hide();
+        $('body').append(allTimeHighMarkup);
+        // for(i ; i < 10; i++) {
+          setTimeout(function() {
+            $('.container').show();
+            $('.allTimeHigh').remove();
+          }, 5000);
+      }
     }
 
-    var allTimeHighMarkup = '<div class="allTimeHigh" style="opacity: 0.9;"><div><h1 class="allTimeHightext flash">ALL TIME HIGH!!!</h1></div></div>'
+    var allTimeHighMarkup = '<div class="allTimeHigh" style="opacity: 0.9;"><div><h1 class="allTimeHightext flash">ALL TIME HIGH!!!<br/><i>$' + allTimeHigh.price + ' USD</i></h1></div>';
 
     function getRandom(max) {
         return Math.round(Math.random() * max);
