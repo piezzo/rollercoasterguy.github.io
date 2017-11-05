@@ -200,7 +200,7 @@ $(document).ready(function() {
       console.log(JSON.stringify(allTimeHigh));
       if (allTimeHigh.price > 0) {
         $('.container').hide();
-        $('body').append(allTimeHighMarkup);
+        $('body').append('<div class="allTimeHigh" style="opacity: 0.9;"><div><h1 class="allTimeHightext flash">ALL TIME HIGH!!!<br/><b><i>$' + allTimeHigh.price + '</i> USD</b></h1></div>');
         // for(i ; i < 10; i++) {
           setTimeout(function() {
             $('.container').show();
@@ -208,8 +208,6 @@ $(document).ready(function() {
           }, 5000);
       }
     }
-
-    var allTimeHighMarkup = '<div class="allTimeHigh" style="opacity: 0.9;"><div><h1 class="allTimeHightext flash">ALL TIME HIGH!!!<br/><i>$' + allTimeHigh.price + ' USD</i></h1></div>';
 
     function getRandom(max) {
         return Math.round(Math.random() * max);
